@@ -1,3 +1,4 @@
+package org.kacper;
 
 public final class Customer {
     private final String id;
@@ -8,7 +9,7 @@ public final class Customer {
     //optional 
     private final String phone;
     private final String email;
-    private final Double discount;
+    private final Double permamentDiscount;
     
     
     private Customer(CustomerBuilder builder) {
@@ -18,7 +19,7 @@ public final class Customer {
         this.pesel = builder.pesel;
         this.phone = builder.phone;
         this.email = builder.email;
-        this.discount = builder.discount;
+        this.permamentDiscount = builder.discount;
     }
 
     public static class CustomerBuilder {

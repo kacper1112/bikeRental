@@ -1,4 +1,4 @@
-package repo;
+package org.kacper.repo;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

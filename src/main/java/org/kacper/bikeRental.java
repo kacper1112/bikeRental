@@ -1,3 +1,5 @@
+package org.kacper;
+
 public class bikeRental {
     
     
