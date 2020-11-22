@@ -4,19 +4,19 @@
 Celem projektu jest stworzenie aplikacji umożliwiającej prowadzenie wypożyczalni rowerów i sprzętu rowerowego. Aplikacja
 ma służyć zarówno obsłudze wypożyczalni, jak i klientom. Podstawowe funkcjonalności z perspektywy:
 * administratora:
+    * dodawanie nowych pracowników do bazy,
+* pracownika:
     * dodawanie nowego sprzętu do bazy,
     * dodawanie nowych klientów do bazy,
-    * dodawanie nowych pracowników do bazy,
     * wyszukiwanie klientów po słowach kluczowych,
     * rejestracja wypożyczeń (jeden lub więcej rowerów i sztuk sprzętu na użytkownika),
-    * rejestracja uszkodzeń sprzętu podczas wypożyczenia,
-    * generowanie kodów zniżkowych,
+    * <s>rejestracja uszkodzeń sprzętu podczas wypożyczenia</s>,
+    * <s>generowanie kodów zniżkowych</s>,
     * generowanie raportów za dany okres działalności (przychody),
 * klienta:
     * przeglądanie dostępnych rowerów i sprzętu,
     * składanie prośby o rezerwację,
     * korzystanie z kodów zniżkowych przy składaniu rezerwacji,
-* dla każdego użytkownika:
     * wyszukiwanie sprzętu po słowach kluczowych, kategoriach.
     
     
@@ -28,7 +28,7 @@ uruchomiona na zdalnym serwerze (wstępnie myślałem o Heroku).
 
 ## Wykorzystywane wzorce projektowe
 
-1. `Builder` - klasy Bike, org.kacper.Customer — dodawanie opcjonalnych informacji.
+1. `Builder` - klasy Bike, Customer — dodawanie opcjonalnych informacji.
 1. `Strategy` - wybieranie odpowiedniego sposobu wyliczania należności za wynajem (czy rower + akcesoria, czy samo
 akcesorium, czy obowiązuje zniżka, czy wypożyczenie w święto itd.)
 1. `Factory` - połączenie z bazą danych (łatwe przejście pomiędzy np. bazą testową w H2 a produkcyjną w PostgreSQL,
@@ -40,6 +40,10 @@ akcesorium, czy obowiązuje zniżka, czy wypożyczenie w święto itd.)
 najmniej),
 1. `Adapter` - generowanie raportów do różnych formatów plików, wykorzystanie zewnętrznych bibliotek i dopasowanie ich
 do jednego interfejsu,
+1. `Observer` - konfiguracja odpowiedniego kalkulatora do zamówienia w zależności od jego szczegółów,
+1. `Iterator` - własny iterator do przeglądania wyników wyszukiwania oferty wypożyczalni,
+1. `Decorator` - nie pamiętam po co, ale też miał być,
+1. `Chain of responsibility` - przy wysyłaniu powiadomień o zbliżającym się terminie zakończenia wypożyczenia.
 
 ---------------------
 #### Pomysły:

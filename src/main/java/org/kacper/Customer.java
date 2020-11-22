@@ -9,7 +9,7 @@ public final class Customer {
     //optional 
     private final String phone;
     private final String email;
-    private final Double permamentDiscount;
+    private final Double permanentDiscount;
     
     
     private Customer(CustomerBuilder builder) {
@@ -19,7 +19,7 @@ public final class Customer {
         this.pesel = builder.pesel;
         this.phone = builder.phone;
         this.email = builder.email;
-        this.permamentDiscount = builder.discount;
+        this.permanentDiscount = builder.discount;
     }
 
     public static class CustomerBuilder {
