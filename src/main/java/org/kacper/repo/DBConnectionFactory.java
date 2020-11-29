@@ -1,8 +1,10 @@
 package org.kacper.repo;
 
 
+import java.sql.Connection;
+
 public class DBConnectionFactory {
-    public static DBConnection getDBConnection() {
-        return new PostgresDB();
+    public static Connection getDBConnection(DBType type) {
+        return type.getConstructor().get().connect();
     }
 }
