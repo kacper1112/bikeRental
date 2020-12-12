@@ -3,15 +3,15 @@ package org.kacper.rental_items;
 public final class Bike extends RentalItem {
     
     private final String make;
+    private final String frameSize;
+    private final String wheelSize;
     
     //optional
     private final String suspension;
-    private final String frameSize;
-    private final String wheelSize;
     private final String frameNumber;
 
     public Bike(Builder builder) {
-        super(builder.getId(), builder.getPricePerHour(), builder.getName());
+        super(builder.getId(), builder.getName(), builder.getPricePerHour());
         this.make = builder.make;
         this.suspension = builder.suspension;
         this.frameSize = builder.frameSize;
@@ -22,31 +22,23 @@ public final class Bike extends RentalItem {
     
     public static class Builder extends RentalItem {
         private final String make;
+        private final String frameSize;
+        private final String wheelSize;
 
         //optional
         private String suspension;
-        private String frameSize;
-        private String wheelSize;
         private String frameNumber;
         
-        public Builder(int id, Double pricePerHour, String name, String make) {
-            super(id, pricePerHour, name);
+        public Builder(int id, Double pricePerHour, String name, String make,
+                       String frameSize, String wheelSize) {
+            super(id, name, pricePerHour);
             this.make = make;
+            this.frameSize = frameSize;
+            this.wheelSize = wheelSize;
         }
         
         public Builder withSuspension(String suspension) {
             this.suspension = suspension;
-            return this;
-        }
-        
-        
-        public Builder withFrameSize(String frameSize) {
-            this.frameSize = frameSize;
-            return this;
-        }
-        
-        public Builder withWheelSize(String wheelSize) {
-            this.wheelSize = wheelSize;
             return this;
         }
         

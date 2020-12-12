@@ -1,10 +1,8 @@
 package org.kacper.menu;
 
-import org.kacper.rental_items.RentalItem;
 import org.kacper.repo.RepoOperation;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -31,9 +29,9 @@ public class RepoOperationMenu {
         );
 
         System.out.println("Dodano pracownika. Wciśnij enter, aby kontynuować");
-        in.next();
         
         MenuUtil.pressAnyKey();
+        //in.close();
     }
     
     public static void addAccessoryType() {
@@ -46,9 +44,9 @@ public class RepoOperationMenu {
         RepoOperation.getInstance().addAccessoryType(type);
 
         System.out.println("Dodano typ akcesorium. Wciśnij enter, aby kontynuować");
-        in.next();
 
         MenuUtil.pressAnyKey();
+        //in.close();
     }
     
     public static void addAccessory() {
@@ -68,9 +66,39 @@ public class RepoOperationMenu {
         RepoOperation.getInstance().addAccessory(name, price, desc, type);
 
         System.out.println("Dodano akcesorium. Wciśnij enter, aby kontynuować");
-        in.next();
-
+        
         MenuUtil.pressAnyKey();
+        //in.close();
+    }
+    
+    public static void addBike() {
+        Scanner in = new Scanner(System.in);
+        String name, make, suspension, frameSize, wheelSize, frameNumber;
+        double price;
+
+        System.out.println("Podaj nazwę roweru:");
+        name = in.nextLine();
+        System.out.println("Podaj cenę wypożyczenia roweru na godzinę:");
+        price = in.nextDouble();
+        System.out.println("Podaj markę roweru:");
+        make = in.next();
+        System.out.println("Podaj rozmiar ramy:");
+        frameSize = in.next();
+        System.out.println("Podaj rozmiar kół:");
+        wheelSize = in.next();
+        System.out.println("Opcjonalne: podaj informacje o zawieszeniu roweru (wpisz '-' aby pominąć):");
+        suspension = in.next();
+        suspension = suspension.equals("-") ? null : suspension;
+        System.out.println("Opcjonalne: podaj numer ramy roweru (wpisz '-' aby pominąć):");
+        frameNumber = in.next();
+        frameNumber = frameNumber.equals("-") ? null : frameNumber;
+        
+        RepoOperation.getInstance().addBike(name, price, make, frameSize, wheelSize, suspension, frameNumber);
+
+        System.out.println("Dodano rower. Wciśnij enter aby kontynuować");
+        
+        MenuUtil.pressAnyKey();
+        //in.close();
     }
     
     public static void addCustomer() {
@@ -101,6 +129,7 @@ public class RepoOperationMenu {
         System.out.println("Dodano klienta. Wciśnij enter aby kontynuować");
         
         MenuUtil.pressAnyKey();
+        //in.close();
     }
     
     public static void addRental() {
@@ -124,6 +153,7 @@ public class RepoOperationMenu {
         temp = in.nextInt();
         while(temp != -1) {
             rentalBikes.add(temp);
+            temp = in.nextInt();
         }
 
         System.out.println("Podaj id wypożyczanych akcesoriów, każdy w nowej linijce. Aby " +
@@ -132,10 +162,15 @@ public class RepoOperationMenu {
         temp = in.nextInt();
         while(temp != -1) {
             rentalAccessories.add(temp);
+            temp = in.nextInt();
         }
         
         RepoOperation.getInstance().addRental(from, to, customerId, rentalBikes, rentalAccessories);
+
+        System.out.println("Dodano wypożyczenie. Wciśnij enter aby kontynuować.");
+        MenuUtil.pressAnyKey();
         
+        //in.close();
     }
 }
 

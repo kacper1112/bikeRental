@@ -10,11 +10,12 @@ public class DBStructureInitializer {
     private static final String createBikesTable =
             "create table if not exists bikes (" +
                     "id serial primary key not null," +
-                    "price_per_hour real not null, " +
                     "name varchar(50) not null," +
-                    "suspension varchar(50) not null," +
-                    "frame_size varchar(10)," +
+                    "price_per_hour double precision null, " +
+                    "make varchar(50) not null," +
+                    "frame_size varchar(10) not null," +
                     "wheel_size varchar(10) not null," +
+                    "suspension varchar(50)," +
                     "frame_number varchar(50));";
 
     private static final String createAccessoryTypesTable =
@@ -26,7 +27,7 @@ public class DBStructureInitializer {
             "create table if not exists accessories (" +
                     "id serial primary key not null," +
                     "name varchar(50) not null," +
-                    "price_per_hour real not null," +
+                    "price_per_hour double precision not null," +
                     "description varchar(200) not null," +
                     "type varchar(30) references accessory_types(type));";
 

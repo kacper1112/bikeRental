@@ -1,11 +1,7 @@
 package org.kacper.repo;
 
-import org.kacper.rental_items.Bike;
-import org.kacper.rental_items.RentalItem;
-
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 public class RepoOperation {
@@ -72,6 +68,27 @@ public class RepoOperation {
         }
     }
     
+    public void addBike(String name, Double price, String make, String frameSize,
+                        String wheelSize, String suspension, String frameNumber) {
+        String sql = "insert into bikes (name, price_per_hour, make, frame_size, wheel_size," +
+                "suspension, frame_number) values (?,?,?,?,?,?,?);";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, name);
+            statement.setDouble(2, price);
+            statement.setString(3, make);
+            statement.setString(4, frameSize);
+            statement.setString(5, wheelSize);
+            statement.setString(6, suspension);
+            statement.setString(7, frameNumber);
+            statement.executeUpdate();
+            statement.close();
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
     public void addCustomer(String name, String surname, String pesel, String password,
                             String phone, String email, Integer discount) {
         String sql = 
@@ -124,21 +141,23 @@ public class RepoOperation {
                 "insert into rentals (timeFrom, timeTo, customer_id) values (?,?,?);";// returning rental_id;";
 
         try {
-            PreparedStatement rentalStatement = connection.prepareStatement(rentalSql);
+            PreparedStatement rentalStatement = connection.prepareStatement(rentalSql, Statement.RETURN_GENERATED_KEYS);
             rentalStatement.setObject(1, from);
             rentalStatement.setObject(2, to);
             rentalStatement.setInt(3, customerId);
             rentalStatement.executeUpdate();
-//            int key = rentalStatement.getGeneratedKeys().getInt(1);
-//            rentalStatement.close();
-//
-//            for (Integer item : rentalBikes) {
-//                addRentalBike(key, item);
-//            }
-//
-//            for (Integer item : rentalAccessories)
-//                addRentalAccessory(key, item);
-//            
+            var rs = rentalStatement.getGeneratedKeys();
+            rs.next();
+            int key = rs.getInt(1);
+            rentalStatement.close();
+
+            for (Integer item : rentalBikes) {
+                addRentalBike(key, item);
+            }
+
+            for (Integer item : rentalAccessories)
+                addRentalAccessory(key, item);
+
         } catch(SQLException ex) {
             ex.printStackTrace();
         }

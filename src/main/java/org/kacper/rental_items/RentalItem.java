@@ -3,13 +3,13 @@ package org.kacper.rental_items;
 
 public abstract class RentalItem {
     private final int id;
-    private final Double pricePerHour;
     private final String name;
+    private final Double pricePerHour;
     
-    protected RentalItem(int id, Double pricePerHour, String name) {
+    protected RentalItem(int id, String name, Double pricePerHour) {
         this.id = id;
-        this.pricePerHour = pricePerHour;
         this.name = name;
+        this.pricePerHour = pricePerHour;
     }
 
     public int getId() {
