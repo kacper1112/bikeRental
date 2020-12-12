@@ -3,20 +3,20 @@ package org.kacper;
 import org.kacper.util.PriceCalculator;
 import org.kacper.rental_items.RentalItem;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Rental {
     private final int id;
-    private final LocalTime from;
-    private final LocalTime to;
+    private final LocalDateTime from;
+    private final LocalDateTime to;
     private final Customer customer;
     private final List<RentalItem> rentalItems;
     private final PriceCalculator priceCalculator;
 
     public Rental(int id,
-                  LocalTime from,
-                  LocalTime to,
+                  LocalDateTime from,
+                  LocalDateTime to,
                   Customer customer,
                   List<RentalItem> rentalItems,
                   PriceCalculator priceCalculator) {
@@ -32,11 +32,11 @@ public class Rental {
         return id;
     }
 
-    public LocalTime getFrom() {
+    public LocalDateTime getFrom() {
         return from;
     }
 
-    public LocalTime getTo() {
+    public LocalDateTime getTo() {
         return to;
     }
 

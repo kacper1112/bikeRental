@@ -4,6 +4,7 @@ import org.kacper.rental_items.Bike;
 import org.kacper.rental_items.RentalItem;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class RepoOperation {
     private final Connection connection;
     
     private RepoOperation() {
-        connection = DBConnectionFactory.getDBConnection(DBType.H2);
+        connection = DBConnectionFactory.getDBConnection(DBType.POSTGRES);
     }
     
     public static RepoOperation getInstance() {
@@ -72,7 +73,7 @@ public class RepoOperation {
     }
     
     public void addCustomer(String name, String surname, String pesel, String password,
-                            String phone, String email, int discount) {
+                            String phone, String email, Integer discount) {
         String sql = 
                 "insert into customers (name, surname, pesel, password, phone, email, permanent_discount) values" +
                         "(?,?,?,?,?,?,?);";
@@ -85,7 +86,7 @@ public class RepoOperation {
             statement.setString(4, Integer.toString(password.hashCode()));
             statement.setString(5, phone);
             statement.setString(6, email);
-            statement.setInt(7, discount);
+            statement.setObject(7, discount, Types.INTEGER);
             statement.executeUpdate();
             statement.close();
         } catch(SQLException ex) {
@@ -117,9 +118,10 @@ public class RepoOperation {
         statement.close();
     }
 
-    public void addRental(LocalTime from, LocalTime to, int customerId, List<RentalItem> rentalItems) {
-        String rentalSql = 
-                "insert into rentals (timeFrom, timeTo, customer_id) values (?,?,?) returning rental_id;";
+    public void addRental(LocalDateTime from, LocalDateTime to, int customerId, List<Integer> rentalBikes,
+                          List<Integer> rentalAccessories) {
+        String rentalSql =
+                "insert into rentals (timeFrom, timeTo, customer_id) values (?,?,?);";// returning rental_id;";
 
         try {
             PreparedStatement rentalStatement = connection.prepareStatement(rentalSql);
@@ -127,46 +129,44 @@ public class RepoOperation {
             rentalStatement.setObject(2, to);
             rentalStatement.setInt(3, customerId);
             rentalStatement.executeUpdate();
-            int key = rentalStatement.getGeneratedKeys().getInt(1);
-            rentalStatement.close();
-
-            for(RentalItem item : rentalItems) {
-                if(item instanceof Bike) {
-                    addRentalBike(key, item.getId());
-                } else {
-                    addRentalAccessory(key, item.getId());
-                }
-            }
-            
-            
+//            int key = rentalStatement.getGeneratedKeys().getInt(1);
+//            rentalStatement.close();
+//
+//            for (Integer item : rentalBikes) {
+//                addRentalBike(key, item);
+//            }
+//
+//            for (Integer item : rentalAccessories)
+//                addRentalAccessory(key, item);
+//            
         } catch(SQLException ex) {
             ex.printStackTrace();
         }
     }
     
-    public void test() {
-        
-        try {
-            Statement statement = connection.createStatement();
-            var rs = statement.executeQuery("select * from accessory_types;");
-            
-            if(rs.next()) {
-                System.out.println(rs.getInt(1));
-                System.out.println(rs.getString(2));
-            }
-            
-            rs = statement.executeQuery("select * from accessories;");
-            
-            if(rs.next()) {
-                System.out.println(rs.getInt(1));
-                System.out.println(rs.getString(2));
-                System.out.println(rs.getString(3));
-                System.out.println(rs.getString(4));
-            }
-
-
-        } catch(SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
+//    public void test() {
+//        
+//        try {
+//            Statement statement = connection.createStatement();
+//            var rs = statement.executeQuery("select * from accessory_types;");
+//            
+//            if(rs.next()) {
+//                System.out.println(rs.getInt(1));
+//                System.out.println(rs.getString(2));
+//            }
+//            
+//            rs = statement.executeQuery("select * from accessories;");
+//            
+//            if(rs.next()) {
+//                System.out.println(rs.getInt(1));
+//                System.out.println(rs.getString(2));
+//                System.out.println(rs.getString(3));
+//                System.out.println(rs.getString(4));
+//            }
+//
+//
+//        } catch(SQLException ex) {
+//            ex.printStackTrace();
+//        }
+//    }
 }
