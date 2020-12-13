@@ -29,7 +29,7 @@ public final class Bike extends RentalItem {
         private String suspension;
         private String frameNumber;
         
-        public Builder(int id, Double pricePerHour, String name, String make,
+        public Builder(int id, String name, Double pricePerHour, String make,
                        String frameSize, String wheelSize) {
             super(id, name, pricePerHour);
             this.make = make;

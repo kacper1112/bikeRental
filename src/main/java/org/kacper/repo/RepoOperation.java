@@ -1,7 +1,16 @@
 package org.kacper.repo;
 
+import org.kacper.Customer;
+import org.kacper.Rental;
+import org.kacper.rental_items.Accessory;
+import org.kacper.rental_items.AccessoryType;
+import org.kacper.rental_items.Bike;
+import org.kacper.rental_items.RentalItem;
+
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class RepoOperation {
@@ -163,29 +172,200 @@ public class RepoOperation {
         }
     }
     
-//    public void test() {
-//        
-//        try {
-//            Statement statement = connection.createStatement();
-//            var rs = statement.executeQuery("select * from accessory_types;");
-//            
-//            if(rs.next()) {
-//                System.out.println(rs.getInt(1));
-//                System.out.println(rs.getString(2));
-//            }
-//            
-//            rs = statement.executeQuery("select * from accessories;");
-//            
-//            if(rs.next()) {
-//                System.out.println(rs.getInt(1));
-//                System.out.println(rs.getString(2));
-//                System.out.println(rs.getString(3));
-//                System.out.println(rs.getString(4));
-//            }
-//
-//
-//        } catch(SQLException ex) {
-//            ex.printStackTrace();
-//        }
-//    }
+    public List<Bike> getAllBikes() {
+        String sql = "select * from bikes;";
+        List<Bike> bikes = new ArrayList<>();
+        
+        try {
+            Statement statement = connection.createStatement();
+            var rs = statement.executeQuery(sql);
+            
+            while(rs.next()) {
+                bikes.add(mapRowToBike(rs));
+            }
+            
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+        return bikes;
+    }
+    
+    public List<Accessory> getAllAccessories() {
+        String sql = "select * from accessories;";
+        List<Accessory> accessories = new ArrayList<>();
+
+        try {
+            Statement statement = connection.createStatement();
+            var rs = statement.executeQuery(sql);
+
+            while(rs.next()) {
+                accessories.add(mapRowToAccessory(rs));
+            }
+
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return accessories;
+    }
+
+    public List<Customer> getAllCustomers() {
+        String sql = "select * from customers;";
+
+        List<Customer> customers = new ArrayList<>();
+
+        try {
+            Statement statement = connection.createStatement();
+            var rs = statement.executeQuery(sql);
+
+            while(rs.next()) {
+                customers.add(mapRowToCustomer(rs));
+            }
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return customers;
+    }
+    
+    public Bike getBikeById(int id) {
+        String sql = "select * from bikes where id=" + id + ";";
+        Bike bike = null;
+
+        try {
+            Statement statement = connection.createStatement();
+            var rs = statement.executeQuery(sql);
+
+            if(rs.next()) {
+                bike = mapRowToBike(rs);
+            }
+
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return bike;
+    }
+
+    public Accessory getAccessoryById(int id) {
+        String sql = "select * from accesories where id=" + id + ";";
+        Accessory accessory = null;
+
+        try {
+            Statement statement = connection.createStatement();
+            var rs = statement.executeQuery(sql);
+
+            if(rs.next()) {
+                accessory = mapRowToAccessory(rs);
+            }
+
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return accessory;
+    }
+    
+    public Customer getCustomerById(int id) {
+        String sql = "select * from customers where id=" + id + ";";
+        Customer customer = null;
+        
+        try {
+            Statement statement = connection.createStatement();
+            var rs = statement.executeQuery(sql);
+
+            if(rs.next()) {
+                customer = mapRowToCustomer(rs);
+            }
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return customer;
+    }
+    
+    
+    
+    public List<Rental> getAllRentals() {
+        String sql = "select * from rentals r " +
+                //"left join rental_bikes rb on r.id=rb.rental_id " +
+                //"left join rental_accessories ra on r.id=ra.rental_id " +
+                "join customers c on r.customer_id=c.id;";
+                //"left join bikes bk on rb.bike_id=bk.id " +
+                //"left join accessories ac on ra.accessory_id=ac.id;";
+
+        List<Rental> rentals = new ArrayList<>();
+
+        try {
+            Statement statement = connection.createStatement();
+            var rs = statement.executeQuery(sql);
+
+            while(rs.next()) {
+                //rentals.add(mapRowToRental(rs));
+            }
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return rentals;
+    }
+    
+    private Bike mapRowToBike(ResultSet rs) throws SQLException {
+
+        return new Bike.Builder(
+                rs.getInt("id"),
+                rs.getString("name"),
+                rs.getDouble("price_per_hour"),
+                rs.getString("make"),
+                rs.getString("frame_size"),
+                rs.getString("wheel_size"))
+                .withSuspension(rs.getString("suspension"))
+                .withFrameNumber(rs.getString("frame_number"))
+                .build();
+    }
+    
+    private Accessory mapRowToAccessory(ResultSet rs) throws SQLException {
+         
+        return new Accessory(
+                rs.getInt("id"),
+                rs.getString("name"),
+                rs.getDouble("price_per_hour"),
+                rs.getString("description"),
+                AccessoryType.valueOf(rs.getString("type"))
+        );
+    }
+    
+    private Customer mapRowToCustomer(ResultSet rs) throws SQLException {
+        
+        return new Customer.CustomerBuilder(
+                rs.getInt("id"),
+                rs.getString("name"),
+                rs.getString("surname"),
+                rs.getString("pesel"))
+                .withPhone(rs.getString("phone"))
+                .withEmail(rs.getString("email"))
+                .withDiscount(rs.getInt("permanent_discount"))
+                .build();
+    }
+    
+    private Rental mapRowToRental(ResultSet rs) throws SQLException {
+
+        List<RentalItem> rentalItems = getAllRentalItemsFromRentalId(rs.getInt("id"));
+        
+        Rental rental = new Rental(
+                rs.getInt("id"),
+                rs.getObject("timeFrom", LocalDateTime.class),
+                rs.getObject("timeTo", LocalDateTime.class),
+                getCustomerById(rs.getInt("customer_id")),
+                
+        )
+    }
+    
+    private List<RentalItem> getAllRentalItemsFromRentalId(int id) throws SQLException {
+        String sql = "select * from rental_bikes rb where rental_id = " + id + "" +
+                " join bikes b on bk.bike_id = b.id;";
+        
+        
+    }
 }

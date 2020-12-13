@@ -1,7 +1,7 @@
 package org.kacper;
 
 public final class Customer {
-    private final String id;
+    private final int id;
     private final String name;
     private final String surname;
     private final String pesel;
@@ -9,7 +9,7 @@ public final class Customer {
     //optional 
     private final String phone;
     private final String email;
-    private final Double permanentDiscount;
+    private final int permanentDiscount;
     
     
     private Customer(CustomerBuilder builder) {
@@ -23,7 +23,7 @@ public final class Customer {
     }
 
     public static class CustomerBuilder {
-        private final String id;
+        private final int id;
         private final String name;
         private final String surname;
         private final String pesel;
@@ -31,9 +31,9 @@ public final class Customer {
         //optional 
         private String phone;
         private String email;
-        private Double discount;
+        private int discount;
 
-        public CustomerBuilder(String id, String name, String surname, String pesel) {
+        public CustomerBuilder(int id, String name, String surname, String pesel) {
             this.id = id;
             this.name = name;
             this.surname = surname;
@@ -50,7 +50,7 @@ public final class Customer {
             return this;
         }
 
-        public CustomerBuilder withDiscount(Double discount) {
+        public CustomerBuilder withDiscount(int discount) {
             this.discount = discount;
             return this;
         }
