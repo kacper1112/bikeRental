@@ -11,6 +11,10 @@ public final class Customer {
     private final String email;
     private final int permanentDiscount;
     
+    public int getId() {
+        return id;
+    }
+    
     
     private Customer(CustomerBuilder builder) {
         this.id = builder.id;

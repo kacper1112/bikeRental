@@ -12,20 +12,18 @@ public class Rental {
     private final LocalDateTime to;
     private final Customer customer;
     private final List<RentalItem> rentalItems;
-    private final PriceCalculator priceCalculator;
+    private PriceCalculator priceCalculator;
 
     public Rental(int id,
                   LocalDateTime from,
                   LocalDateTime to,
                   Customer customer,
-                  List<RentalItem> rentalItems,
-                  PriceCalculator priceCalculator) {
+                  List<RentalItem> rentalItems) {
         this.id = id;
         this.from = from;
         this.to = to;
         this.customer = customer;
         this.rentalItems = rentalItems;
-        this.priceCalculator = priceCalculator;
     }
     
     public int getId() {
@@ -46,6 +44,10 @@ public class Rental {
 
     public List<RentalItem> getRentalItems() {
         return rentalItems;
+    }
+    
+    public void setPriceCalculator(PriceCalculator calculator) {
+        this.priceCalculator = calculator;
     }
 
     public PriceCalculator getPriceCalculator() {

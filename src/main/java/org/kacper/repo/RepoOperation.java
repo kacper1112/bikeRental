@@ -10,7 +10,6 @@ import org.kacper.rental_items.RentalItem;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class RepoOperation {
@@ -166,6 +165,8 @@ public class RepoOperation {
 
             for (Integer item : rentalAccessories)
                 addRentalAccessory(key, item);
+            
+            rentalStatement.close();
 
         } catch(SQLException ex) {
             ex.printStackTrace();
@@ -183,6 +184,8 @@ public class RepoOperation {
             while(rs.next()) {
                 bikes.add(mapRowToBike(rs));
             }
+            
+            statement.close();
             
         } catch(SQLException ex) {
             ex.printStackTrace();
@@ -202,6 +205,8 @@ public class RepoOperation {
             while(rs.next()) {
                 accessories.add(mapRowToAccessory(rs));
             }
+            
+            statement.close();
 
         } catch(SQLException ex) {
             ex.printStackTrace();
@@ -222,6 +227,8 @@ public class RepoOperation {
             while(rs.next()) {
                 customers.add(mapRowToCustomer(rs));
             }
+            
+            statement.close();
         } catch(SQLException ex) {
             ex.printStackTrace();
         }
@@ -241,6 +248,7 @@ public class RepoOperation {
                 bike = mapRowToBike(rs);
             }
 
+            statement.close();
         } catch(SQLException ex) {
             ex.printStackTrace();
         }
@@ -259,6 +267,8 @@ public class RepoOperation {
             if(rs.next()) {
                 accessory = mapRowToAccessory(rs);
             }
+            
+            statement.close();
 
         } catch(SQLException ex) {
             ex.printStackTrace();
@@ -278,6 +288,8 @@ public class RepoOperation {
             if(rs.next()) {
                 customer = mapRowToCustomer(rs);
             }
+            
+            statement.close();
         } catch(SQLException ex) {
             ex.printStackTrace();
         }
@@ -285,15 +297,30 @@ public class RepoOperation {
         return customer;
     }
     
-    
+    public int getCustomerRentalCount(int id) {
+        String sql = "select count(*) from rentals where customer_id=" + id + ";";
+        int result = 0;
+
+        try {
+            Statement statement = connection.createStatement();
+            var rs = statement.executeQuery(sql);
+
+            if(rs.next()) {
+                result = rs.getInt(1);
+            }
+
+            statement.close();
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return result;
+    }
     
     public List<Rental> getAllRentals() {
         String sql = "select * from rentals r " +
-                //"left join rental_bikes rb on r.id=rb.rental_id " +
-                //"left join rental_accessories ra on r.id=ra.rental_id " +
                 "join customers c on r.customer_id=c.id;";
-                //"left join bikes bk on rb.bike_id=bk.id " +
-                //"left join accessories ac on ra.accessory_id=ac.id;";
+                
 
         List<Rental> rentals = new ArrayList<>();
 
@@ -304,6 +331,8 @@ public class RepoOperation {
             while(rs.next()) {
                 //rentals.add(mapRowToRental(rs));
             }
+            
+            statement.close();
         } catch(SQLException ex) {
             ex.printStackTrace();
         }
@@ -350,22 +379,53 @@ public class RepoOperation {
     }
     
     private Rental mapRowToRental(ResultSet rs) throws SQLException {
-
-        List<RentalItem> rentalItems = getAllRentalItemsFromRentalId(rs.getInt("id"));
         
         Rental rental = new Rental(
                 rs.getInt("id"),
                 rs.getObject("timeFrom", LocalDateTime.class),
                 rs.getObject("timeTo", LocalDateTime.class),
                 getCustomerById(rs.getInt("customer_id")),
-                
-        )
+                getAllRentalItemsFromRentalId(rs.getInt("id"))
+        );
+        
+        rental.setPriceCalculator(PriceCalculatorConfig.getCalculator(rental));
+        
+        return rental;
     }
     
     private List<RentalItem> getAllRentalItemsFromRentalId(int id) throws SQLException {
-        String sql = "select * from rental_bikes rb where rental_id = " + id + "" +
+        String bikeSql = "select b.* from rental_bikes rb where rb.rental_id = " + id +
                 " join bikes b on bk.bike_id = b.id;";
         
+        String accessorySql = "select a.* from rental_accessories ra where ra.rental_id = " +
+                id + " join accessories a on ra.accessory_id = a.id;";
         
+        List<RentalItem> rentalItems = new ArrayList<>();
+
+        try {
+            Statement bikeStatement = connection.createStatement();
+            var rs = bikeStatement.executeQuery(bikeSql);
+
+            while(rs.next()) {
+                rentalItems.add(mapRowToBike(rs));
+            }
+            
+            bikeStatement.close();
+            
+            Statement accessoryStatement = connection.createStatement();
+            rs = accessoryStatement.executeQuery(accessorySql);
+            
+            while(rs.next()) {
+                rentalItems.add(mapRowToAccessory(rs));
+            }
+            
+            accessoryStatement.close();
+
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+        
+        return rentalItems;
     }
 }
