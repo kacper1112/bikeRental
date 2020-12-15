@@ -44,11 +44,11 @@ public final class Bike extends RentalItem {
         String frameNumber = this.getFrameNumber();
 
         return
-            this.getMake() + "\n" +
-            this.getPricePerHour() + "$/h\n" +
             this.getName() + "\n" +
-            this.getFrameSize() + "\n" +
-            this.getWheelSize() + "\n" +
+            this.getMake() + "\n" +
+            this.getPricePerHour() + " pln/h\n" +
+            "rozmiar ramy: " + this.getFrameSize() + "\n" +
+            "rozmiar kół: " + this.getWheelSize() + "\n" +
             ((suspension == null) ? "" : suspension + "\n") +
             ((frameNumber == null) ? "" : frameNumber + "\n");
     }

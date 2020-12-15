@@ -3,6 +3,7 @@ package org.kacper.menu;
 import org.kacper.Customer;
 import org.kacper.rental_items.Accessory;
 import org.kacper.rental_items.Bike;
+import org.kacper.repo.AvailableBikeIterator;
 import org.kacper.repo.RepoOperation;
 
 import java.time.LocalDateTime;
@@ -231,6 +232,24 @@ public class RepoOperationMenu {
         }
 
         System.out.println(accessory + "\n");
+    }
+    
+    public static void getAllAvailableBikes() {
+        AvailableBikeIterator iterator = new AvailableBikeIterator();
+        
+        System.out.println("Wszystkie dostępne aktualnie rowery:");
+        
+        Bike bike = iterator.nextAvailable();
+        
+        if(bike == null) {
+            System.out.println("Aktualnie brak dostępnych rowerów");
+            return;
+        }
+        
+        while(bike != null) {
+            System.out.println(bike + "\n");
+            bike = iterator.nextAvailable();
+        }
     }
 }
 
