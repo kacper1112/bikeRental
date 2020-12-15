@@ -18,8 +18,41 @@ public final class Bike extends RentalItem {
         this.wheelSize = builder.wheelSize;
         this.frameNumber = builder.frameNumber;
     }
+
+    public String getMake() {
+        return make;
+    }
+
+    public String getFrameSize() {
+        return frameSize;
+    }
+
+    public String getWheelSize() {
+        return wheelSize;
+    }
+
+    public String getSuspension() {
+        return suspension;
+    }
+
+    public String getFrameNumber() {
+        return frameNumber;
+    }
     
-    
+    public String toString() {
+        String suspension = this.getSuspension();
+        String frameNumber = this.getFrameNumber();
+
+        return
+            this.getMake() + "\n" +
+            this.getPricePerHour() + "$/h\n" +
+            this.getName() + "\n" +
+            this.getFrameSize() + "\n" +
+            this.getWheelSize() + "\n" +
+            ((suspension == null) ? "" : suspension + "\n") +
+            ((frameNumber == null) ? "" : frameNumber + "\n");
+    }
+ 
     public static class Builder extends RentalItem {
         private final String make;
         private final String frameSize;
@@ -28,6 +61,8 @@ public final class Bike extends RentalItem {
         //optional
         private String suspension;
         private String frameNumber;
+        
+        
         
         public Builder(int id, String name, Double pricePerHour, String make,
                        String frameSize, String wheelSize) {

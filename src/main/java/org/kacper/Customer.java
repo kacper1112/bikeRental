@@ -14,8 +14,46 @@ public final class Customer {
     public int getId() {
         return id;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public String getPesel() {
+        return pesel;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public int getPermanentDiscount() {
+        return permanentDiscount;
+    }
     
-    
+    public String toString() {
+        String phone = this.getPhone();
+        String email = this.getEmail();
+        int discount = this.getPermanentDiscount();
+
+
+        return
+            this.getName() + "\n" +
+            this.getSurname() + "\n" +
+            this.getPesel() + "\n" +
+            ((phone == null) ? "" : phone + "\n") +
+            ((email == null) ? "" : email + "\n") +
+            ((discount == 0) ? "" : "stała zniżka:" + discount) + "\n\n";
+    }
+
     private Customer(CustomerBuilder builder) {
         this.id = builder.id;
         this.name = builder.name;

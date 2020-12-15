@@ -1,5 +1,8 @@
 package org.kacper.menu;
 
+import org.kacper.Customer;
+import org.kacper.rental_items.Accessory;
+import org.kacper.rental_items.Bike;
 import org.kacper.repo.RepoOperation;
 
 import java.time.LocalDateTime;
@@ -171,6 +174,63 @@ public class RepoOperationMenu {
         MenuUtil.pressAnyKey();
         
         //in.close();
+    }
+    
+    public static void getAllBikes() {
+        List<Bike> bikes = RepoOperation.getInstance().getAllBikes();
+        
+        System.out.println("Wszystkie rowery oferowane w wypożyczalni:");
+        for(Bike bike : bikes) {
+            System.out.println(bike + "\n");
+        }
+    }
+    
+    public static void getAllAccessories() {
+        List<Accessory> accessories = RepoOperation.getInstance().getAllAccessories();
+
+        System.out.println("Wszystkie akcesoria oferowane w wypożyczalni:");
+        for(Accessory accessory : accessories) {
+            System.out.println(accessory + "\n");
+        }
+    }
+    
+    public static void getAllCustomers() {
+        List<Customer> customers = RepoOperation.getInstance().getAllCustomers();
+
+        System.out.println("Wszyscy klienci:");
+        for(Customer customer : customers) {
+            
+        }
+    }
+    
+    public static void getBikeById() {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Podaj id wyszukiwanego roweru:");
+        int id = in.nextInt();
+        
+        Bike bike = RepoOperation.getInstance().getBikeById(id);
+        
+        if(bike == null) {
+            System.out.println("Nie udało się znaleźć określonego roweru");
+            return;
+        }
+
+        System.out.println(bike + "\n");
+    }
+    
+    public static void getAccessoryById() {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Podaj id wyszukiwanego akcesorium:");
+        int id = in.nextInt();
+        
+        Accessory accessory = RepoOperation.getInstance().getAccessoryById(id);
+        
+        if(accessory == null) {
+            System.out.println("Nie udało się znaleźć określonego akcesorium");
+            return;
+        }
+
+        System.out.println(accessory + "\n");
     }
 }
 

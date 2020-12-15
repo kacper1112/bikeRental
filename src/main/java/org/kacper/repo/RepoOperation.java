@@ -1,7 +1,9 @@
 package org.kacper.repo;
 
 import org.kacper.Customer;
+import org.kacper.Employee;
 import org.kacper.Rental;
+import org.kacper.UserType;
 import org.kacper.rental_items.Accessory;
 import org.kacper.rental_items.AccessoryType;
 import org.kacper.rental_items.Bike;
@@ -297,6 +299,26 @@ public class RepoOperation {
         return customer;
     }
     
+    public Employee getEmployeeById(int id) {
+        String sql = "select * from employees where id=" + id + ";";
+        Employee employee = null;
+
+        try {
+            Statement statement = connection.createStatement();
+            var rs = statement.executeQuery(sql);
+
+            if(rs.next()) {
+                employee = mapRowToEmployee(rs);
+            }
+
+            statement.close();
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return employee;
+    }
+    
     public int getCustomerRentalCount(int id) {
         String sql = "select count(*) from rentals where customer_id=" + id + ";";
         int result = 0;
@@ -329,7 +351,7 @@ public class RepoOperation {
             var rs = statement.executeQuery(sql);
 
             while(rs.next()) {
-                //rentals.add(mapRowToRental(rs));
+                rentals.add(mapRowToRental(rs));
             }
             
             statement.close();
@@ -376,6 +398,16 @@ public class RepoOperation {
                 .withEmail(rs.getString("email"))
                 .withDiscount(rs.getInt("permanent_discount"))
                 .build();
+    }
+
+    private Employee mapRowToEmployee(ResultSet rs) throws SQLException {
+
+        return new Employee(
+                rs.getInt("id"),
+                rs.getString("name"),
+                rs.getString("surname"),
+                rs.getString("pesel")
+        );
     }
     
     private Rental mapRowToRental(ResultSet rs) throws SQLException {
@@ -427,5 +459,36 @@ public class RepoOperation {
         
         
         return rentalItems;
+    }
+    
+    public UserType validateUser(String pesel, String password) {
+        String userSql = "select * from customers where pesel like '" + pesel + "' and " +
+                "password like '" + password.hashCode() + "';"; 
+        
+        String employeeSql = "select * from employees where pesel like '" + pesel + "' and " +
+                "password like '" + password.hashCode() + "';";
+        
+        UserType result = UserType.NOUSER;
+        
+        try {
+            Statement statement = connection.createStatement();
+            var rs = statement.executeQuery(userSql);
+            
+            if(rs.next()) {
+                result = UserType.CUSTOMER;
+            }
+            statement.close();
+            
+            statement = connection.createStatement();
+            rs = statement.executeQuery(employeeSql);
+            
+            if(rs.next()) {
+                result = UserType.EMPLOYEE;
+            }
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+        return result;
     }
 }

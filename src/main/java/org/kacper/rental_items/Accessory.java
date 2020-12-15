@@ -9,4 +9,20 @@ public class Accessory extends RentalItem {
         this.description = description;
         this.type = type;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public AccessoryType getType() {
+        return type;
+    }
+    
+    public String toString() {
+        return
+            this.getName() + "\n" +
+            this.getPricePerHour() + "$/h\n" +
+            this.getDescription() + "\n" +
+            this.getType() + "\n\n";
+    }
 }

@@ -9,7 +9,7 @@ public class LoginMenu {
         Scanner scanner = new Scanner(System.in);
         String username, password;
         
-        System.out.println("Podaj nazwę użytkownika:");
+        System.out.println("Podaj pesel użytkownika:");
         username = scanner.next();
         System.out.println("Podaj hasło:");
         password = scanner.next();
@@ -22,9 +22,6 @@ public class LoginMenu {
                 break;
             case EMPLOYEE:
                 EmployeeMenu.show();
-                break;
-            case ADMIN:
-                AdminMenu.show();
                 break;
             default:
                 System.out.println("Spróbuj ponownie\n");
