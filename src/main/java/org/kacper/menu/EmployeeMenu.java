@@ -58,9 +58,7 @@ public class EmployeeMenu {
                 break;
             case 12:
                 return;
-            default:
-                show();
-                break;
         }
+        show();
     }
 }

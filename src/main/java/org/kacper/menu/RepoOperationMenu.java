@@ -4,7 +4,8 @@ import org.kacper.Customer;
 import org.kacper.rental_items.Accessory;
 import org.kacper.rental_items.Bike;
 import org.kacper.repo.AvailableBikeIterator;
-import org.kacper.repo.RepoOperation;
+import org.kacper.repo.RepoGetOperation;
+import org.kacper.repo.RepoUpdateOperation;
 
 import java.time.LocalDateTime;
 import java.util.LinkedList;
@@ -25,7 +26,7 @@ public class RepoOperationMenu {
         System.out.println("Podaj hasło pracownika:");
         password = in.next();
 
-        RepoOperation.getInstance().addEmployee(
+        RepoUpdateOperation.getInstance().addEmployee(
                 name,
                 surname,
                 pesel,
@@ -35,7 +36,6 @@ public class RepoOperationMenu {
         System.out.println("Dodano pracownika. Wciśnij enter, aby kontynuować");
         
         MenuUtil.pressAnyKey();
-        //in.close();
     }
     
     public static void addAccessoryType() {
@@ -45,12 +45,11 @@ public class RepoOperationMenu {
         System.out.println("Podaj nowy typ akcesoriów:");
         type = in.next();
         
-        RepoOperation.getInstance().addAccessoryType(type);
+        RepoUpdateOperation.getInstance().addAccessoryType(type);
 
         System.out.println("Dodano typ akcesorium. Wciśnij enter, aby kontynuować");
 
         MenuUtil.pressAnyKey();
-        //in.close();
     }
     
     public static void addAccessory() {
@@ -59,20 +58,19 @@ public class RepoOperationMenu {
         double price;
 
         System.out.println("Podaj nazwę akcesorium:");
-        name = in.next();
+        name = in.nextLine();
         System.out.println("Podaj cenę wypożyczenia akcesorium na godzinę:");
-        price = in.nextDouble();
+        price = Double.parseDouble(in.nextLine());
         System.out.println("Podaj opis akcesorium:");
-        desc = in.next();
+        desc = in.nextLine();
         System.out.println("Podaj typ akcesorium:");
         type = in.next();
         
-        RepoOperation.getInstance().addAccessory(name, price, desc, type);
+        RepoUpdateOperation.getInstance().addAccessory(name, price, desc, type);
 
         System.out.println("Dodano akcesorium. Wciśnij enter, aby kontynuować");
         
         MenuUtil.pressAnyKey();
-        //in.close();
     }
     
     public static void addBike() {
@@ -97,7 +95,7 @@ public class RepoOperationMenu {
         frameNumber = in.next();
         frameNumber = frameNumber.equals("-") ? null : frameNumber;
         
-        RepoOperation.getInstance().addBike(name, price, make, frameSize, wheelSize, suspension, frameNumber);
+        RepoUpdateOperation.getInstance().addBike(name, price, make, frameSize, wheelSize, suspension, frameNumber);
 
         System.out.println("Dodano rower. Wciśnij enter aby kontynuować");
         
@@ -128,12 +126,11 @@ public class RepoOperationMenu {
         discount = in.nextInt();
         discount = discount == 0 ? null : discount;
         
-        RepoOperation.getInstance().addCustomer(name, surname, pesel, password, phone, email, discount);
+        RepoUpdateOperation.getInstance().addCustomer(name, surname, pesel, password, phone, email, discount);
 
         System.out.println("Dodano klienta. Wciśnij enter aby kontynuować");
         
         MenuUtil.pressAnyKey();
-        //in.close();
     }
     
     public static void addRental() {
@@ -169,39 +166,46 @@ public class RepoOperationMenu {
             temp = in.nextInt();
         }
         
-        RepoOperation.getInstance().addRental(from, to, customerId, rentalBikes, rentalAccessories);
+        RepoUpdateOperation.getInstance().addRental(from, to, customerId, rentalBikes, rentalAccessories);
 
         System.out.println("Dodano wypożyczenie. Wciśnij enter aby kontynuować.");
         MenuUtil.pressAnyKey();
-        
-        //in.close();
     }
     
     public static void getAllBikes() {
-        List<Bike> bikes = RepoOperation.getInstance().getAllBikes();
+        List<Bike> bikes = RepoGetOperation.getInstance().getAllBikes();
         
         System.out.println("Wszystkie rowery oferowane w wypożyczalni:");
         for(Bike bike : bikes) {
             System.out.println(bike + "\n");
         }
+
+        System.out.println("Wciśnij enter by kontynuować.");
+        MenuUtil.pressAnyKey();
     }
     
     public static void getAllAccessories() {
-        List<Accessory> accessories = RepoOperation.getInstance().getAllAccessories();
+        List<Accessory> accessories = RepoGetOperation.getInstance().getAllAccessories();
 
         System.out.println("Wszystkie akcesoria oferowane w wypożyczalni:");
         for(Accessory accessory : accessories) {
             System.out.println(accessory + "\n");
         }
+
+        System.out.println("Wciśnij enter by kontynuować.");
+        MenuUtil.pressAnyKey();
     }
     
     public static void getAllCustomers() {
-        List<Customer> customers = RepoOperation.getInstance().getAllCustomers();
+        List<Customer> customers = RepoGetOperation.getInstance().getAllCustomers();
 
         System.out.println("Wszyscy klienci:");
         for(Customer customer : customers) {
-            
+            System.out.println(customer);
         }
+
+        System.out.println("Wciśnij enter by kontynuować.");
+        MenuUtil.pressAnyKey();
     }
     
     public static void getBikeById() {
@@ -209,7 +213,7 @@ public class RepoOperationMenu {
         System.out.println("Podaj id wyszukiwanego roweru:");
         int id = in.nextInt();
         
-        Bike bike = RepoOperation.getInstance().getBikeById(id);
+        Bike bike = RepoGetOperation.getInstance().getBikeById(id);
         
         if(bike == null) {
             System.out.println("Nie udało się znaleźć określonego roweru");
@@ -217,6 +221,9 @@ public class RepoOperationMenu {
         }
 
         System.out.println(bike + "\n");
+
+        System.out.println("Wciśnij enter by kontynuować.");
+        MenuUtil.pressAnyKey();
     }
     
     public static void getAccessoryById() {
@@ -224,7 +231,7 @@ public class RepoOperationMenu {
         System.out.println("Podaj id wyszukiwanego akcesorium:");
         int id = in.nextInt();
         
-        Accessory accessory = RepoOperation.getInstance().getAccessoryById(id);
+        Accessory accessory = RepoGetOperation.getInstance().getAccessoryById(id);
         
         if(accessory == null) {
             System.out.println("Nie udało się znaleźć określonego akcesorium");
@@ -232,6 +239,9 @@ public class RepoOperationMenu {
         }
 
         System.out.println(accessory + "\n");
+
+        System.out.println("Wciśnij enter by kontynuować.");
+        MenuUtil.pressAnyKey();
     }
     
     public static void getAllAvailableBikes() {
@@ -242,7 +252,8 @@ public class RepoOperationMenu {
         Bike bike = iterator.nextAvailable();
         
         if(bike == null) {
-            System.out.println("Aktualnie brak dostępnych rowerów");
+            System.out.println("Aktualnie brak dostępnych rowerów. Wciśnij enter by kontynuować.");
+            MenuUtil.pressAnyKey();
             return;
         }
         
@@ -250,6 +261,9 @@ public class RepoOperationMenu {
             System.out.println(bike + "\n");
             bike = iterator.nextAvailable();
         }
+
+        System.out.println("Wciśnij enter by kontynuować.");
+        MenuUtil.pressAnyKey();
     }
 }
 

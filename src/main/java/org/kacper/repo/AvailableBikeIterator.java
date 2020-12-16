@@ -12,12 +12,12 @@ public class AvailableBikeIterator {
     private final Iterator<Bike> bikeIterator;
     
     public AvailableBikeIterator() {
-        allBikes = RepoOperation.getInstance().getAllBikes();
+        allBikes = RepoGetOperation.getInstance().getAllBikes();
         bikeIterator = allBikes.iterator();
     }
     
     public Bike nextAvailable() {
-        Bike bike = null;
+        Bike bike;
         
         if(!bikeIterator.hasNext()) {
             return null;
@@ -35,7 +35,7 @@ public class AvailableBikeIterator {
     }
     
     private static boolean isBikeAvailable(Bike bike) {
-        List<Rental> rentals = RepoOperation.getInstance().getAllRentals();
+        List<Rental> rentals = RepoGetOperation.getInstance().getAllRentals();
         LocalDateTime now = LocalDateTime.now();
         
         for(Rental rental : rentals) {
