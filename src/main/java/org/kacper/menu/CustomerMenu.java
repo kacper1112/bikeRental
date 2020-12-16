@@ -12,25 +12,28 @@ public class CustomerMenu {
         
         int input = MenuUtil.readUserInput(5);
         
-        while(input != 5) {
-            switch (input) {
-                case 0:
-                    CustomerFacade.getAllBikes();
-                    break;
-                case 1:
-                    CustomerFacade.getAllAccessories();
-                    break;
-                case 2:
-                    CustomerFacade.getBikeById();
-                    break;
-                case 3:
-                    CustomerFacade.getAccessoryById();
-                    break;
-                case 4:
-                    CustomerFacade.getAllAvailableBikes();
-            }
-            
-            input = MenuUtil.readUserInput(5);
+        
+        switch (input) {
+            case 0:
+                CustomerFacade.getAllBikes();
+                break;
+            case 1:
+                CustomerFacade.getAllAccessories();
+                break;
+            case 2:
+                CustomerFacade.getBikeById();
+                break;
+            case 3:
+                CustomerFacade.getAccessoryById();
+                break;
+            case 4:
+                CustomerFacade.getAllAvailableBikes();
+                break;
+            case 5:
+                return;
+            default:
+                show();
+                break;
         }
     }
 }

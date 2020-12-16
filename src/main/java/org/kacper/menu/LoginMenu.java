@@ -27,16 +27,5 @@ public class LoginMenu {
                 System.out.println("Spróbuj ponownie\n");
                 show();
         }
-
-        switch (MenuUtil.readUserInput(2)) {
-            case 0:
-                //LoginMenu.show();
-                break;
-            case 1:
-                //CreateNewAccountMenu.show();
-                break;
-            default:
-                System.exit(0);
-        }
     }
 }

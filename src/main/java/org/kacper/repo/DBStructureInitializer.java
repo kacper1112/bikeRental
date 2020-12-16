@@ -78,6 +78,10 @@ public class DBStructureInitializer {
                     "drop table if exists customers cascade;" +
                     "drop table if exists employees cascade;" +
                     "drop table if exists accessory_types cascade;";
+    
+    private static final String addAdmin =
+            "insert into employees (name, surname, pesel, password) values" +
+            "('Kacper', 'Stysinski', '990419', '" + "123".hashCode() + "');";
 
     public static Connection initialize(String url, String user, String password) {
 
@@ -87,7 +91,7 @@ public class DBStructureInitializer {
             connection = DriverManager.getConnection(url, user, password);
             Statement statement = connection.createStatement();
 
-            //statement.executeUpdate(dropAllTables);
+            statement.executeUpdate(dropAllTables);
 
             statement.addBatch(createBikesTable);
             statement.addBatch(createAccessoryTypesTable);
@@ -97,7 +101,9 @@ public class DBStructureInitializer {
             statement.addBatch(createRentalBikesTable);
             statement.addBatch(createRentalAccessoriesTable);
             statement.addBatch(createEmployeesTable);
-
+            
+            statement.addBatch(addAdmin);
+            
             statement.executeBatch();
             statement.close();
 
