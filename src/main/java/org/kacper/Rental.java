@@ -1,6 +1,6 @@
 package org.kacper;
 
-import org.kacper.util.PriceCalculator;
+import org.kacper.calc.PriceCalculator;
 import org.kacper.rental_items.RentalItem;
 
 import java.time.LocalDateTime;

@@ -217,11 +217,13 @@ public class RepoGetOperation {
     }
 
     List<RentalItem> getAllRentalItemsFromRentalId(int id) throws SQLException {
-        String bikeSql = "select b.* from rental_bikes rb where rb.rental_id = " + id +
-                " join bikes b on bk.bike_id = b.id;";
+        String bikeSql = "select b.* from rental_bikes rb " +
+                " join bikes b on rb.bike_id = b.id" +
+                " where rb.rental_id = " + id + ";";
 
-        String accessorySql = "select a.* from rental_accessories ra where ra.rental_id = " +
-                id + " join accessories a on ra.accessory_id = a.id;";
+        String accessorySql = "select a.* from rental_accessories ra" +
+                " join accessories a on ra.accessory_id = a.id " +
+                " where ra.rental_id = " + id + ";";
 
         List<RentalItem> rentalItems = new ArrayList<>();
 

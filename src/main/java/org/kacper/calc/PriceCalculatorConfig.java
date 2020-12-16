@@ -1,9 +1,7 @@
-package org.kacper.repo;
+package org.kacper.calc;
 
 import org.kacper.Rental;
-import org.kacper.util.FirstVisitCalculator;
-import org.kacper.util.PriceCalculator;
-import org.kacper.util.StandardCalculator;
+import org.kacper.repo.RepoGetOperation;
 
 public class PriceCalculatorConfig {
     public static PriceCalculator getCalculator(Rental rental) {

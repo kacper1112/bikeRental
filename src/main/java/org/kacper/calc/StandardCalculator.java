@@ -1,4 +1,4 @@
-package org.kacper.util;
+package org.kacper.calc;
 
 import org.apache.commons.math3.util.Precision;
 import org.kacper.Rental;

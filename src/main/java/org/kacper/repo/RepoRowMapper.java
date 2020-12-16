@@ -3,6 +3,7 @@ package org.kacper.repo;
 import org.kacper.Customer;
 import org.kacper.Employee;
 import org.kacper.Rental;
+import org.kacper.calc.PriceCalculatorConfig;
 import org.kacper.rental_items.Accessory;
 import org.kacper.rental_items.Bike;
 
