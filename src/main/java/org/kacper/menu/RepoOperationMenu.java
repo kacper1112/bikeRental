@@ -249,17 +249,14 @@ public class RepoOperationMenu {
         
         System.out.println("Wszystkie dostępne aktualnie rowery:");
         
-        Bike bike = iterator.nextAvailable();
-        
-        if(bike == null) {
+        if(!iterator.hasNext()) {
             System.out.println("Aktualnie brak dostępnych rowerów. Wciśnij enter by kontynuować.");
             MenuUtil.pressAnyKey();
             return;
         }
         
-        while(bike != null) {
-            System.out.println(bike + "\n");
-            bike = iterator.nextAvailable();
+        while(iterator.hasNext()) {
+            System.out.println(iterator.next() + "\n");
         }
 
         System.out.println("Wciśnij enter by kontynuować.");

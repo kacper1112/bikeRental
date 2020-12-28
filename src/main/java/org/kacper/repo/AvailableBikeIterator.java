@@ -6,34 +6,29 @@ import org.kacper.rental_items.Bike;
 import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AvailableBikeIterator {
-    private final List<Bike> allBikes;
+    private final List<Bike> availableBikes;
     private final Iterator<Bike> bikeIterator;
     
     public AvailableBikeIterator() {
-        allBikes = RepoGetOperation.getInstance().getAllBikes();
-        bikeIterator = allBikes.iterator();
+        availableBikes = RepoGetOperation.getInstance()
+                .getAllBikes()
+                .stream()
+                .filter(AvailableBikeIterator::isBikeAvailable)
+                .collect(Collectors.toList());
+        bikeIterator = availableBikes.iterator();
     }
-    
-    public Bike nextAvailable() {
-        Bike bike;
-        
-        if(!bikeIterator.hasNext()) {
-            return null;
-        }
-        
-        
-        while(bikeIterator.hasNext()) {
-            bike = bikeIterator.next();
-            if(isBikeAvailable(bike)) {
-                return bike;
-            }
-        }
-        
-        return null;
+
+    public boolean hasNext() {
+        return bikeIterator.hasNext();
     }
-    
+
+    public Bike next() {
+        return bikeIterator.next();
+    }
+
     private static boolean isBikeAvailable(Bike bike) {
         List<Rental> rentals = RepoGetOperation.getInstance().getAllRentals();
         LocalDateTime now = LocalDateTime.now();
