@@ -39,7 +39,9 @@ public class AvailableBikeIterator {
         LocalDateTime now = LocalDateTime.now();
         
         for(Rental rental : rentals) {
-            if(rental.getRentalItems().contains(bike) && rental.getTo().isBefore(now)) {
+            if(rental.getRentalItems().contains(bike) &&
+                    now.isAfter(rental.getFrom()) &&
+                    now.isBefore(rental.getTo())) {
                 return false;
             }
         }

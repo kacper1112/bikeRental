@@ -91,7 +91,7 @@ public class DBStructureInitializer {
             connection = DriverManager.getConnection(url, user, password);
             Statement statement = connection.createStatement();
 
-            statement.executeUpdate(dropAllTables);
+            //statement.executeUpdate(dropAllTables);
 
             statement.addBatch(createBikesTable);
             statement.addBatch(createAccessoryTypesTable);

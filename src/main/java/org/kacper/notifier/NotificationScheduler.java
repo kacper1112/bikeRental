@@ -23,7 +23,7 @@ public class NotificationScheduler {
         
         for(Rental rental : rentals) {
             if(rental.getTo().isAfter(LocalDateTime.now()) &&
-                    ChronoUnit.MINUTES.between(rental.getTo(), LocalDateTime.now()) < 30) {
+                    Math.abs(ChronoUnit.MINUTES.between(rental.getTo(), LocalDateTime.now())) < 30) {
                 Notifier notifier = new Notifier();
                 notifier.makeRequest(new NotificationRequest(rental));
             }

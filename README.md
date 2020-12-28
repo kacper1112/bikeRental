@@ -38,14 +38,11 @@ akcesorium, czy obowiązuje zniżka, czy wypożyczenie w święto itd.)
     * w implementacji połączenia z bazą danych,
 1. `Facade` - ograniczenie dostępnych instrukcji dla różnych grup użytkowników (admin całość, pracownik mniej, klient 
 najmniej),
+1. `Chain of responsibility` - przy wysyłaniu powiadomień o zbliżającym się terminie zakończenia wypożyczenia.
+1. `Iterator` - własny iterator do przeglądania wyników wyszukiwania oferty wypożyczalni,
+1. `State` - oznaczanie stanu roweru, dostępny lub wypożyczony,
+
 1. `Adapter` - generowanie raportów do różnych formatów plików, wykorzystanie zewnętrznych bibliotek i dopasowanie ich
 do jednego interfejsu,
 1. `Observer` - konfiguracja odpowiedniego kalkulatora do zamówienia w zależności od jego szczegółów,
-1. `Iterator` - własny iterator do przeglądania wyników wyszukiwania oferty wypożyczalni,
 1. `Decorator` - nie pamiętam po co, ale też miał być,
-1. `Chain of responsibility` - przy wysyłaniu powiadomień o zbliżającym się terminie zakończenia wypożyczenia.
-
----------------------
-#### Pomysły:
-2. Dodać `Observer` do ustawiania odpowiedniego kalkulatora ceny w zamówieniu (w zależności od liczby
-wypożyczonych rzeczy, numeru wizyty itd.)

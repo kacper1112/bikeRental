@@ -1,5 +1,7 @@
 package org.kacper.rental_items;
 
+import java.util.Objects;
+
 public final class Bike extends RentalItem {
     
     private final String make;
@@ -38,7 +40,8 @@ public final class Bike extends RentalItem {
     public String getFrameNumber() {
         return frameNumber;
     }
-    
+
+    @Override
     public String toString() {
         String suspension = this.getSuspension();
         String frameNumber = this.getFrameNumber();
@@ -52,7 +55,24 @@ public final class Bike extends RentalItem {
             ((suspension == null) ? "" : suspension + "\n") +
             ((frameNumber == null) ? "" : frameNumber + "\n");
     }
- 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Bike bike = (Bike) o;
+        return Objects.equals(getMake(), bike.getMake()) &&
+                Objects.equals(getFrameSize(), bike.getFrameSize()) &&
+                Objects.equals(getWheelSize(), bike.getWheelSize()) &&
+                Objects.equals(getSuspension(), bike.getSuspension()) &&
+                Objects.equals(getFrameNumber(), bike.getFrameNumber());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getMake(), getFrameSize(), getWheelSize(), getSuspension(), getFrameNumber());
+    }
+
     public static class Builder extends RentalItem {
         private final String make;
         private final String frameSize;
