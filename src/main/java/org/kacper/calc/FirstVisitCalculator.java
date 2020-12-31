@@ -9,6 +9,8 @@ import static java.time.temporal.ChronoUnit.MINUTES;
 // First time visitors pay only for bikes, weekend prices do not apply
 
 public class FirstVisitCalculator implements PriceCalculator {
+    private final String name = "First visit calculator";
+    
     @Override
     public double calculatePrice(Rental rental) {
         
@@ -25,5 +27,10 @@ public class FirstVisitCalculator implements PriceCalculator {
         totalPrice = Precision.round(totalPrice, 2);
         
         return totalPrice;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 }

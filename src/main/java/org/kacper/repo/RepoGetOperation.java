@@ -192,6 +192,27 @@ public class RepoGetOperation {
 
         return result;
     }
+    
+    public Rental getRentalById(int id) {
+        String sql = "select * from rentals r " +
+                "join customers c on r.customer_id = c.id " +
+                "where r.id = " + id + ";";
+        
+        Rental result = null;
+        
+        try {
+            Statement statement = connection.createStatement();
+            var rs = statement.executeQuery(sql);
+            
+            if(rs.next()) {
+                result = RepoRowMapper.mapRowToRental(rs);
+            }
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+        return result;
+    }
 
     public List<Rental> getAllRentals() {
         String sql = "select * from rentals r " +

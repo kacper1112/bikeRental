@@ -2,6 +2,8 @@ package org.kacper.reporting;
 
 import org.kacper.Rental;
 
+import java.util.List;
+
 public interface RentalSerializer {
-    String serializeRental(Rental rental);
+    String serializeRentals(List<Rental> rental);
 }

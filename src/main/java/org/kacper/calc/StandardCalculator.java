@@ -9,6 +9,8 @@ import static java.time.temporal.ChronoUnit.MINUTES;
 // Weekends are paid 50% more
 
 public class StandardCalculator implements PriceCalculator {
+    private final String name = "Standard price calculator";
+    
     @Override
     public double calculatePrice(Rental rental) {
         long timeDuringWeek = MINUTES.between(
@@ -31,5 +33,10 @@ public class StandardCalculator implements PriceCalculator {
 
         totalPrice = Precision.round(totalPrice, 2);
         return totalPrice;
+    }
+    
+    @Override
+    public String getName() {
+        return name;
     }
 }

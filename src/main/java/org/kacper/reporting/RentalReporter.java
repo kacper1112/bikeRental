@@ -5,21 +5,18 @@ import org.kacper.repo.RepoGetOperation;
 
 import java.util.List;
 
-public class Reporter {
+public class RentalReporter {
     private final RentalSerializer serializer;
 
-    public Reporter(RentalSerializer serializer) {
+    public RentalReporter(RentalSerializer serializer) {
         this.serializer = serializer;
     }
 
     public void generateReport() {
         List<Rental> rentals = RepoGetOperation.getInstance().getAllRentals();
 
-        StringBuilder report = new StringBuilder();
-        for(Rental rental: rentals) {
-           report.append(serializer.serializeRental(rental));
-        }
+        String serialized = serializer.serializeRentals(rentals);
 
-        System.out.println(report);
+        System.out.println(serialized);
     }
 }

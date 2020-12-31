@@ -51,7 +51,7 @@ public final class Customer {
             this.getPesel() + "\n" +
             ((phone == null) ? "" : phone + "\n") +
             ((email == null) ? "" : email + "\n") +
-            ((discount == 0) ? "" : "stała zniżka:" + discount) + "\n\n";
+            ((discount == 0) ? "" : "stała zniżka:" + discount) + '\n';
     }
 
     private Customer(CustomerBuilder builder) {
