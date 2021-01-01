@@ -3,7 +3,6 @@ package org.kacper.repo;
 import org.kacper.Rental;
 import org.kacper.rental_items.RentalItem;
 import org.kacper.repo.db_factory.DBConnectionFactory;
-import org.kacper.repo.db_factory.DBType;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

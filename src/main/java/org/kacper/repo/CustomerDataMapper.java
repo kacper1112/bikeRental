@@ -2,7 +2,6 @@ package org.kacper.repo;
 
 import org.kacper.Customer;
 import org.kacper.repo.db_factory.DBConnectionFactory;
-import org.kacper.repo.db_factory.DBType;
 
 import java.sql.*;
 import java.util.ArrayList;

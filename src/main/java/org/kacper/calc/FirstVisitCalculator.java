@@ -4,6 +4,7 @@ import org.apache.commons.math3.util.Precision;
 import org.kacper.Rental;
 import org.kacper.rental_items.Bike;
 import org.kacper.rental_items.RentalItem;
+
 import static java.time.temporal.ChronoUnit.MINUTES;
 
 // First time visitors pay only for bikes, weekend prices do not apply
