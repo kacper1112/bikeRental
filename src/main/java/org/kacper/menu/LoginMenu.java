@@ -16,7 +16,7 @@ public class LoginMenu {
         
         MenuUtil.clearScreen();
 
-        switch(Authenticator.checkUser(username, password)) {
+        switch(Authenticator.validateUser(username, password)) {
             case CUSTOMER:
                 CustomerMenu.show();
                 break;

@@ -1,7 +1,7 @@
 package org.kacper.notifier;
 
 import org.kacper.Rental;
-import org.kacper.repo.RepoGetOperation;
+import org.kacper.repo.RentalDataMapper;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -19,7 +19,7 @@ public class NotificationScheduler {
     
     
     private static final Runnable checkAndSendNotifications = () -> {
-        List<Rental> rentals = RepoGetOperation.getInstance().getAllRentals();
+        List<Rental> rentals = RentalDataMapper.getInstance().getAllRentals();
         
         for(Rental rental : rentals) {
             if(rental.getTo().isAfter(LocalDateTime.now()) &&

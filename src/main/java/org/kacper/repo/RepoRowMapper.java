@@ -66,9 +66,9 @@ public class RepoRowMapper {
                 rs.getInt("id"),
                 rs.getObject("timeFrom", LocalDateTime.class),
                 rs.getObject("timeTo", LocalDateTime.class),
-                RepoGetOperation.getInstance()
+                CustomerDataMapper.getInstance()
                         .getCustomerById(rs.getInt("customer_id")), 
-                RepoGetOperation.getInstance()
+                RentalDataMapper.getInstance()
                         .getAllRentalItemsFromRentalId(rs.getInt("id"))
         );
 

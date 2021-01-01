@@ -40,9 +40,10 @@ akcesorium, czy obowiązuje zniżka, czy wypożyczenie w święto itd.)
 najmniej),
 1. `Chain of responsibility` - przy wysyłaniu powiadomień o zbliżającym się terminie zakończenia wypożyczenia.
 1. `Iterator` - własny iterator do przeglądania wyników wyszukiwania oferty wypożyczalni,
+1. `Adapter` - adaptacja "pretty printera" wypożyczeń do generatora raportów,
+1. `Data Mapper` - mapowanie obiektów z bazy danych do swoich odpowiedników w aplikacji, zapewnianie podstawowych
+   operacji bazodanowych,
+   
 1. `State` - oznaczanie stanu roweru, dostępny lub wypożyczony,
-
-1. `Adapter` - generowanie raportów do różnych formatów plików, wykorzystanie zewnętrznych bibliotek i dopasowanie ich
-do jednego interfejsu,
 1. `Observer` - konfiguracja odpowiedniego kalkulatora do zamówienia w zależności od jego szczegółów,
 1. `Decorator` - nie pamiętam po co, ale też miał być,

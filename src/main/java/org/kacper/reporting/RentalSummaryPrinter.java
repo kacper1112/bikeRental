@@ -2,11 +2,11 @@ package org.kacper.reporting;
 
 
 import org.kacper.Rental;
-import org.kacper.repo.RepoGetOperation;
+import org.kacper.repo.RentalDataMapper;
 
 public class RentalSummaryPrinter {
     public String printSummary(int rentalId) {
-        Rental rental = RepoGetOperation.getInstance().getRentalById(rentalId);
+        Rental rental = RentalDataMapper.getInstance().getRentalById(rentalId);
         
         String result = '\n' + Integer.toString(rental.getId()) + '\n' +
                 rental.getFrom().toString() + '\n' +

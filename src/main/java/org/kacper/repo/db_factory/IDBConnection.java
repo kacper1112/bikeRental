@@ -1,4 +1,4 @@
-package org.kacper.repo;
+package org.kacper.repo.db_factory;
 
 import java.sql.Connection;
 

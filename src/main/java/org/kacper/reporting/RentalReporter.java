@@ -1,7 +1,7 @@
 package org.kacper.reporting;
 
 import org.kacper.Rental;
-import org.kacper.repo.RepoGetOperation;
+import org.kacper.repo.RentalDataMapper;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public class RentalReporter {
     }
 
     public void generateReport() {
-        List<Rental> rentals = RepoGetOperation.getInstance().getAllRentals();
+        List<Rental> rentals = RentalDataMapper.getInstance().getAllRentals();
 
         String serialized = serializer.serializeRentals(rentals);
 

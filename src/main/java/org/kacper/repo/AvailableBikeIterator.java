@@ -13,7 +13,7 @@ public class AvailableBikeIterator {
     private final Iterator<Bike> bikeIterator;
     
     public AvailableBikeIterator() {
-        availableBikes = RepoGetOperation.getInstance()
+        availableBikes = BikeDataMapper.getInstance()
                 .getAllBikes()
                 .stream()
                 .filter(AvailableBikeIterator::isBikeAvailable)
@@ -30,7 +30,7 @@ public class AvailableBikeIterator {
     }
 
     private static boolean isBikeAvailable(Bike bike) {
-        List<Rental> rentals = RepoGetOperation.getInstance().getAllRentals();
+        List<Rental> rentals = RentalDataMapper.getInstance().getAllRentals();
         LocalDateTime now = LocalDateTime.now();
         
         for(Rental rental : rentals) {

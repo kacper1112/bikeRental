@@ -3,9 +3,7 @@ package org.kacper.menu;
 import org.kacper.Customer;
 import org.kacper.rental_items.Accessory;
 import org.kacper.rental_items.Bike;
-import org.kacper.repo.AvailableBikeIterator;
-import org.kacper.repo.RepoGetOperation;
-import org.kacper.repo.RepoUpdateOperation;
+import org.kacper.repo.*;
 
 import java.time.LocalDateTime;
 import java.util.LinkedList;
@@ -26,7 +24,7 @@ public class RepoOperationMenu {
         System.out.println("Podaj hasło pracownika:");
         password = in.next();
 
-        RepoUpdateOperation.getInstance().addEmployee(
+        EmployeeDataMapper.getInstance().addEmployee(
                 name,
                 surname,
                 pesel,
@@ -45,7 +43,7 @@ public class RepoOperationMenu {
         System.out.println("Podaj nowy typ akcesoriów:");
         type = in.next();
         
-        RepoUpdateOperation.getInstance().addAccessoryType(type);
+        AccessoryDataMapper.getInstance().addAccessoryType(type);
 
         System.out.println("Dodano typ akcesorium. Wciśnij enter, aby kontynuować");
 
@@ -66,7 +64,7 @@ public class RepoOperationMenu {
         System.out.println("Podaj typ akcesorium:");
         type = in.next();
         
-        RepoUpdateOperation.getInstance().addAccessory(name, price, desc, type);
+        AccessoryDataMapper.getInstance().addAccessory(name, price, desc, type);
 
         System.out.println("Dodano akcesorium. Wciśnij enter, aby kontynuować");
         
@@ -95,7 +93,7 @@ public class RepoOperationMenu {
         frameNumber = in.next();
         frameNumber = frameNumber.equals("-") ? null : frameNumber;
         
-        RepoUpdateOperation.getInstance().addBike(name, price, make, frameSize, wheelSize, suspension, frameNumber);
+        BikeDataMapper.getInstance().addBike(name, price, make, frameSize, wheelSize, suspension, frameNumber);
 
         System.out.println("Dodano rower. Wciśnij enter aby kontynuować");
         
@@ -126,7 +124,7 @@ public class RepoOperationMenu {
         discount = in.nextInt();
         discount = discount == 0 ? null : discount;
         
-        RepoUpdateOperation.getInstance().addCustomer(name, surname, pesel, password, phone, email, discount);
+        CustomerDataMapper.getInstance().addCustomer(name, surname, pesel, password, phone, email, discount);
 
         System.out.println("Dodano klienta. Wciśnij enter aby kontynuować");
         
@@ -166,14 +164,14 @@ public class RepoOperationMenu {
             temp = in.nextInt();
         }
         
-        RepoUpdateOperation.getInstance().addRental(from, to, customerId, rentalBikes, rentalAccessories);
+        RentalDataMapper.getInstance().addRental(from, to, customerId, rentalBikes, rentalAccessories);
 
         System.out.println("Dodano wypożyczenie. Wciśnij enter aby kontynuować.");
         MenuUtil.pressAnyKey();
     }
     
     public static void getAllBikes() {
-        List<Bike> bikes = RepoGetOperation.getInstance().getAllBikes();
+        List<Bike> bikes = BikeDataMapper.getInstance().getAllBikes();
         
         System.out.println("Wszystkie rowery oferowane w wypożyczalni:");
         for(Bike bike : bikes) {
@@ -185,7 +183,7 @@ public class RepoOperationMenu {
     }
     
     public static void getAllAccessories() {
-        List<Accessory> accessories = RepoGetOperation.getInstance().getAllAccessories();
+        List<Accessory> accessories = AccessoryDataMapper.getInstance().getAllAccessories();
 
         System.out.println("Wszystkie akcesoria oferowane w wypożyczalni:");
         for(Accessory accessory : accessories) {
@@ -197,7 +195,7 @@ public class RepoOperationMenu {
     }
     
     public static void getAllCustomers() {
-        List<Customer> customers = RepoGetOperation.getInstance().getAllCustomers();
+        List<Customer> customers = CustomerDataMapper.getInstance().getAllCustomers();
 
         System.out.println("Wszyscy klienci:");
         for(Customer customer : customers) {
@@ -213,7 +211,7 @@ public class RepoOperationMenu {
         System.out.println("Podaj id wyszukiwanego roweru:");
         int id = in.nextInt();
         
-        Bike bike = RepoGetOperation.getInstance().getBikeById(id);
+        Bike bike = BikeDataMapper.getInstance().getBikeById(id);
         
         if(bike == null) {
             System.out.println("Nie udało się znaleźć określonego roweru");
@@ -231,7 +229,7 @@ public class RepoOperationMenu {
         System.out.println("Podaj id wyszukiwanego akcesorium:");
         int id = in.nextInt();
         
-        Accessory accessory = RepoGetOperation.getInstance().getAccessoryById(id);
+        Accessory accessory = AccessoryDataMapper.getInstance().getAccessoryById(id);
         
         if(accessory == null) {
             System.out.println("Nie udało się znaleźć określonego akcesorium");
