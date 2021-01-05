@@ -33,13 +33,11 @@ uruchomiona na zdalnym serwerze (wstępnie myślałem o Heroku).
 akcesorium, czy obowiązuje zniżka, czy wypożyczenie w święto itd.)
 1. `Factory` - połączenie z bazą danych (łatwe przejście pomiędzy np. bazą testową w H2 a produkcyjną w PostgreSQL,
  bazą zapasową w SQLite itp.)
-1. `Singleton` 
-    * głowna klasa programu przechowująca informacje np. o aktualnym użytkowniku (*sesja* programu),
-    * w implementacji połączenia z bazą danych,
-1. `Facade` - ograniczenie dostępnych instrukcji dla różnych grup użytkowników (admin całość, pracownik mniej, klient 
-najmniej),
-1. `Chain of responsibility` - przy wysyłaniu powiadomień o zbliżającym się terminie zakończenia wypożyczenia.
-1. `Iterator` - własny iterator do przeglądania wyników wyszukiwania oferty wypożyczalni,
+1. `Singleton`- w implementacji wzorca Factory,
+1. `Facade` - ograniczenie dostępnych instrukcji dla różnych grup użytkowników (pracownik całość, klient mniej),
+1. `Chain of responsibility` - przy wysyłaniu powiadomień o zbliżającym się terminie zakończenia wypożyczenia, mail -> 
+   telefon -> "ręczne powiadomienie", w zależności od podanych przez klienta informacji,
+1. `Iterator` - własny iterator do przeglądania wszystkich dostępnych aktualnie rowerów,
 1. `Adapter` - adaptacja "pretty printera" wypożyczeń do generatora raportów,
 1. `Data Mapper` - mapowanie obiektów z bazy danych do swoich odpowiedników w aplikacji, zapewnianie podstawowych
    operacji bazodanowych,
