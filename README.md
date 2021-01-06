@@ -23,8 +23,7 @@ ma służyć zarówno obsłudze wypożyczalni, jak i klientom. Podstawowe funkcj
 ## Implementacja
 Nie planuję tworzenia graficznego interfejsu użytkownika, dostęp do programu będzie możliwy poprzez polecenia tekstowe. 
 
-Projekt będzie zrealizowany w języku Java z pomocą bazy danych PostgreSQL. Dla ułatwienia prezentacji aplikacja zostanie
-uruchomiona na zdalnym serwerze (wstępnie myślałem o Heroku).
+Projekt będzie zrealizowany w języku Java z pomocą bazy danych PostgreSQL.
 
 ## Wykorzystywane wzorce projektowe
 
